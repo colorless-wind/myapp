@@ -1,0 +1,424 @@
+<!DOCTYPE>
+<html>
+
+<head>
+    <title>通知信息配置</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <link href="https://cdn.bootcss.com/bootstrap/4.1.1/css/bootstrap.css" rel="stylesheet">
+    <link href="../lib/mui/mui.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="../lib/mui/mui.min.js"></script>
+    <script>
+        var data = null;
+        $(function() {
+
+            //服务端获取菜单配置项
+            var url = '/readJson';
+            $.ajax(url, {
+                //            data: param,
+                dataType: 'json', //服务器返回json格式数据
+                type: 'post', //HTTP请求类型
+                timeout: 15000, //超时时间设置为15秒；
+                //            contentType: 'application/json;charset=utf-8',
+                //            beforeSend: beforeSend,
+                //            complete: doComplete,
+                //            error: doErrCallBack,
+                success: function(res) {
+                    data = res.resultojbect;
+                    //是否显示输出按钮
+                    if (data.pbd.length < 2) {
+                        $('#delPBD').hide();
+                    }
+                    if (data.wl.length < 2) {
+                        $('#delWL').hide();
+                    }
+                    if (data.others.length < 2) {
+                        $('#delOthers').hide();
+                    }
+
+                    //庞巴迪
+                    for (i in data.pbd) {
+                        if (i != 0) {
+
+                            var index = parseInt($('#pbdForm').find('.order').last().text().trim().split('.')[0] - (-1));
+                            var html = '<div class="form-group">' +
+                                '<div class="order">&nbsp;&nbsp;' + index + '. </div>' +
+                                '<textarea class="form-control" name="content" placeholder="不超过50字">' + data.pbd[i].value + '</textarea></div>';
+                            var html10 = '<div class="form-group">' +
+                                '<div class="order">' + index + '. </div>' +
+                                '<textarea class="form-control" name="content" placeholder="不超过50字">' + data.pbd[i].value + '</textarea></div>';
+
+                            if (index < 10) {
+                                $('#pbdForm').append(html);
+                            } else if (index == 10) {
+                                $('#pbdForm').append(html10);
+                            }
+                        } else {
+                            $('#pbdForm').find('textarea').first().val(data.pbd[i].value);
+                        }
+                    }
+                    //湾流
+                    for (i in data.wl) {
+                        if (i != 0) {
+
+                            var index = parseInt($('#wlForm').find('.order').last().text().trim().split('.')[0] - (-1));
+                            var html = '<div class="form-group">' +
+                                '<div class="order">&nbsp;&nbsp;' + index + '. </div>' +
+                                '<textarea class="form-control" name="content" placeholder="不超过50字">' + data.wl[i].value + '</textarea></div>';
+                            var html10 = '<div class="form-group">' +
+                                '<div class="order">' + index + '. </div>' +
+                                '<textarea class="form-control" name="content" placeholder="不超过50字">' + data.wl[i].value + '</textarea></div>';
+
+                            if (index < 10) {
+                                $('#wlForm').append(html);
+                            } else if (index == 10) {
+                                $('#wlForm').append(html10);
+                            }
+                        } else {
+                            $('#wlForm').find('textarea').first().val(data.wl[i].value);
+                        }
+                    }
+                    //其它
+                    for (i in data.others) {
+                        if (i != 0) {
+
+                            var index = parseInt($('#othersForm').find('.order').last().text().trim().split('.')[0] - (-1));
+                            var html = '<div class="form-group">' +
+                                '<div class="order">&nbsp;&nbsp;' + index + '. </div>' +
+                                '<textarea class="form-control" name="content" placeholder="不超过50字">' + data.others[i].value + '</textarea></div>';
+                            var html10 = '<div class="form-group">' +
+                                '<div class="order">' + index + '. </div>' +
+                                '<textarea class="form-control" name="content" placeholder="不超过50字">' + data.others[i].value + '</textarea></div>';
+
+                            if (index < 10) {
+                                $('#othersForm').append(html);
+                            } else if (index == 10) {
+                                $('#othersForm').append(html10);
+                            }
+                        } else {
+                            $('#othersForm').find('textarea').first().val(data.others[i].value);
+                        }
+                    }
+                    //监听输入变化超过字数限制提醒
+                    checkLength()
+                },
+                error: function(err) {
+                    console.warn(err);
+                }
+            })
+
+            /*
+             *监听输入变化超过字数限制提醒
+             */
+            function checkLength() {
+                $("textarea").off('input porpertychange');
+                $("textarea").on('input porpertychange', function() {
+                    var self = $(this);
+                    if (self.val().trim().length > 50) {
+                        self.css('box-shadow', 'inset 0px 0px 2px 1px red');
+                    } else {
+                        self.css('box-shadow', '0 0 0');
+                    }
+                });
+            }
+
+            //添加庞巴迪
+            $('#addPBD').on('click', function() {
+
+                var index = parseInt($('#pbdForm').find('.order').last().text().trim().split('.')[0] - (-1));
+                var html = '<div class="form-group">' +
+                    '<div class="order">&nbsp;&nbsp;' + index + '. </div>' +
+                    '<textarea class="form-control" name="content" placeholder="不超过50字"></textarea></div>';
+                var html10 = '<div class="form-group">' +
+                    '<div class="order">' + index + '. </div>' +
+                    '<textarea class="form-control" name="content" placeholder="不超过50字"></textarea></div>';
+
+                if (index > 1) {
+                    $('#delPBD').show();
+                } else {
+                    $('#delPBD').hide();
+                }
+                if (index < 10) {
+                    $('#pbdForm').append(html);
+                } else if (index == 10) {
+                    $('#pbdForm').append(html10);
+                } else if (index > 10) {
+                    mui.alert('最多只能添加10条');
+                }
+
+                //监听输入变化超过字数限制提醒
+                checkLength();
+            })
+
+            //添加湾流
+            $('#addWL').on('click', function() {
+                var index = parseInt($('#wlForm').find('.order').last().text().trim().split('.')[0] - (-1));
+                var html = '<div class="form-group">' +
+                    '<div class="order">&nbsp;&nbsp;' + index + '. </div>' +
+                    '<textarea class="form-control" name="content" placeholder="不超过50字"></textarea></div>';
+                var html10 = '<div class="form-group">' +
+                    '<div class="order">' + index + '. </div>' +
+                    '<textarea class="form-control" name="content" placeholder="不超过50字"></textarea></div>';
+                if (index > 1) {
+                    $('#delWL').show();
+                } else {
+                    $('#delWL').hide();
+                }
+                if (index < 10) {
+                    $('#wlForm').append(html);
+                } else if (index == 10) {
+                    $('#wlForm').append(html10);
+                } else if (index > 10) {
+                    mui.alert('最多只能添加10条');
+                }
+
+                //监听输入变化超过字数限制提醒
+                checkLength();
+            })
+
+            //添加其它
+            $('#addOthers').on('click', function() {
+                var index = parseInt($('#othersForm').find('.order').last().text().trim().split('.')[0] - (-1));
+                var html = '<div class="form-group">' +
+                    '<div class="order">&nbsp;&nbsp;' + index + '. </div>' +
+                    '<textarea class="form-control" name="content" placeholder="不超过50字"></textarea></div>';
+                var html10 = '<div class="form-group">' +
+                    '<div class="order">' + index + '. </div>' +
+                    '<textarea class="form-control" name="content" placeholder="不超过50字"></textarea></div>';
+                if (index > 1) {
+                    $('#delOthers').show();
+                } else {
+                    $('#delOthers').hide();
+                }
+                if (index < 10) {
+                    $('#othersForm').append(html);
+                } else if (index == 10) {
+                    $('#othersForm').append(html10);
+                } else if (index > 10) {
+                    mui.alert('最多只能添加10条');
+                }
+
+                //监听输入变化超过字数限制提醒
+                checkLength();
+            })
+
+            //删除庞巴迪
+            $('#delPBD').on('click', function() {
+                if ($('#pbdForm').find('.form-group').length > 1) {
+                    $('#pbdForm').find('.form-group').last().remove();
+
+                }
+                if ($('#pbdForm').find('.form-group').length < 2) {
+                    $('#delPBD').hide();
+                }
+            })
+
+            //删除湾流
+            $('#delWL').on('click', function() {
+                if ($('#wlForm').find('.form-group').length > 1) {
+                    $('#wlForm').find('.form-group').last().remove();
+
+                }
+                if ($('#wlForm').find('.form-group').length < 2) {
+                    $('#delWL').hide();
+                }
+            })
+
+            //删除其它
+            $('#delOthers').on('click', function() {
+                if ($('#othersForm').find('.form-group').length > 1) {
+                    $('#othersForm').find('.form-group').last().remove();
+
+                }
+                if ($('#othersForm').find('.form-group').length < 2) {
+                    $('#delOthers').hide();
+                }
+            })
+
+            //提交数据
+            $('#submitBtn').on('click', function() {
+
+                var pbd = $('#pbdForm').serializeArray();
+                var wl = $('#wlForm').serializeArray();
+                var others = $('#othersForm').serializeArray();
+                var pbdNew = [];
+                var wlNew = [];
+                var othersNew = [];
+                //校验
+                var preventAjax = false;
+                $('textarea').css('box-shadow', '0 0 0');
+                $('textarea').each(function() {
+                    var self = $(this);
+                    if (self.val().trim().length > 50) {
+                        self.css('box-shadow', 'inset 0px 0px 2px 1px red');
+                        preventAjax = true;
+                    }
+                })
+                if (preventAjax) {
+                    mui.alert('内容不能多于50字');
+                    return false;
+                }
+
+                //清除空项
+                for (var i in pbd) {
+                    pbd[i].value = pbd[i].value.trim()
+                    if (pbd[i].value.length != 0) {
+                        pbdNew.push(pbd[i]);
+                    }
+                }
+                for (var j in wl) {
+                    wl[j].value = wl[j].value.trim()
+                    if (wl[j].value.length != 0) {
+                        wlNew.push(wl[j]);
+                    }
+                }
+                for (var k in others) {
+                    others[k].value = others[k].value.trim()
+                    if (others[k].value.length != 0) {
+                        othersNew.push(others[k]);
+                    }
+                }
+
+                //发送请求
+                var param = {};
+                param['resultcode'] = '0000';
+                param['resultmsg'] = 'success';
+                param['resultojbect'] = {
+                    pbd: pbdNew,
+                    wl: wlNew,
+                    others: othersNew,
+                };
+                console.log('提交：', param);
+
+                url = '/writeJson';
+
+                $.ajax(url, {
+                    data: JSON.stringify({
+                        "content": param
+                    }),
+                    dataType: 'json', //服务器返回json格式数据
+                    type: 'post', //HTTP请求类型
+                    timeout: 15000, //超时时间设置为15秒；
+                    contentType: 'application/json;charset=utf-8',
+                    //            beforeSend: beforeSend,
+                    //            complete: doComplete,
+                    //            error: doErrCallBack,
+                    success: function(res) {
+                        console.log('返回：', res);
+                        if (res.resultcode == '0000') {
+                            mui.alert('提交成功', function() {
+                                location.reload();
+                            });
+                        }
+                    },
+                    error: function(err) {
+                        console.warn(err);
+                    }
+                })
+            })
+        })
+
+    </script>
+    <style>
+        body {
+            background-image: url(../images/bg.png);
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .title {
+            text-align: center;
+            margin-top: 5%;
+            font-family: "微软雅黑";
+            color: #007bff;
+            text-shadow: 1px 1px 1px #fff;
+        }
+
+        .row {
+            margin: 0;
+            padding: 2%;
+        }
+
+        .row h1 {
+            text-align: center;
+            font-family: "楷体";
+            color: aliceblue;
+        }
+
+        .order {
+            float: left;
+            margin-right: 10px;
+            color: white;
+        }
+
+        .form-control {
+            width: 88%;
+            margin: 0;
+            display: inline-block;
+        }
+
+        .form-group.pull-right {
+            text-align: right;
+            padding-right: 7%;
+        }
+
+        .submit-area {
+            padding: 20px 15%;
+        }
+
+    </style>
+</head>
+
+<body>
+    <!--当前JSON:
+    <p style="color:dodgerblue;font-size: 24px;"></p>
+    修改版本号: <input id="version">
+    <button type="button">提交</button>-->
+    <h1 class="title">通知信息配置</h1>
+    <div class="row">
+        <div class="col-md-4">
+            <h1>庞巴迪</h1>
+            <form id="pbdForm">
+                <div class="form-group">
+                    <div class="order">&nbsp;&nbsp;1. </div>
+                    <textarea class="form-control" name="content" placeholder="不超过50字"></textarea>
+                </div>
+            </form>
+            <div class="form-group pull-right">
+                <button type="button" class="btn btn-info" id="addPBD">添加</button>
+                <button type="button" class="btn btn-danger" id="delPBD">删除</button>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h1>湾流</h1>
+            <form id="wlForm">
+                <div class="form-group">
+                    <div class="order">&nbsp;&nbsp;1. </div>
+                    <textarea class="form-control" name="content" placeholder="不超过50字"></textarea>
+                </div>
+            </form>
+            <div class="form-group pull-right">
+                <button type="button" class="btn btn-info" id="addWL">添加</button>
+                <button type="button" class="btn btn-danger" id="delWL">删除</button>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h1>其它</h1>
+            <form id="othersForm">
+                <div class="form-group">
+                    <div class="order">&nbsp;&nbsp;1. </div>
+                    <textarea class="form-control" name="content" placeholder="不超过50字"></textarea>
+                </div>
+            </form>
+            <div class="form-group pull-right">
+                <button type="button" class="btn btn-info" id="addOthers">添加</button>
+                <button type="button" class="btn btn-danger" id="delOthers">删除</button>
+            </div>
+        </div>
+    </div>
+    <div class="submit-area">
+        <button type="button" class="btn btn-primary btn-block" id="submitBtn">提交</button>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE>
+<html>
+
+<head>
+    <title>通知信息配置</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script>
+        var data = null;
+        $(function() {
+            //服务端获取菜单配置项
+            var url = '/readJson';
+            $.ajax(url, {
+                //            data: param,
+                dataType: 'json', //服务器返回json格式数据
+                type: 'post', //HTTP请求类型
+                timeout: 15000, //超时时间设置为15秒；
+                //            contentType: 'application/json;charset=utf-8',
+                //            beforeSend: beforeSend,
+                //            complete: doComplete,
+                //            error: doErrCallBack,
+                success: function(res) {
+                    console.log(res.version);
+                    data = res;
+                    $('p').text(JSON.stringify(data));
+                }
+            })
+
+            $('button').on('click', function() {
+                url = '/writeJson';
+
+                data.version = $('#version').val();
+
+                $.ajax(url, {
+                    data: JSON.stringify({
+                        "content": data
+                    }),
+                    dataType: 'json', //服务器返回json格式数据
+                    type: 'post', //HTTP请求类型
+                    timeout: 15000, //超时时间设置为15秒；
+                    contentType: 'application/json;charset=utf-8',
+                    //            beforeSend: beforeSend,
+                    //            complete: doComplete,
+                    //            error: doErrCallBack,
+                    success: function(res) {
+                        $('p').text(JSON.stringify(res));
+                    }
+                })
+            })
+        })
+
+    </script>
+</head>
+
+<body>
+    当前JSON:
+    <p style="color:dodgerblue;font-size: 24px;"></p>
+    修改版本号: <input id="version">
+    <button type="button">提交</button>
+</body>
+
+</html>

@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>特价飞行</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+
+    <!--mui-->
+    <link href="../lib/mui/mui.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="../lib/mui/icons-extra.css" />
+    <!--公有css-->
+    <!--<link rel="stylesheet" type="text/css" href="css/public.css" />-->
+    <!--私有css-->
+    <link rel="stylesheet" type="text/css" href="../css/messageShowByPlane.css" />
+    <style>
+        .mui-card {
+            background-image: url(../images/card_bg.png);
+            /*            background-size: 300%;*/
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+    </style>
+</head>
+
+<body>
+    <!--头部导航-->
+    <!--<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">特价飞行</h1>
+			<i class="mui-icon-extra mui-icon-extra-share mui-pull-right share-btn"></i>
+		</header>-->
+    <!--内容区-->
+    <div class="mui-content">
+        <div class="header" style="margin: 15px;text-align: right;"><img src="../images/logo.png" style="width: 30%;"></div>
+        <p style="margin: 15px;">安安专机是一家全方位覆盖公务机航空运输领域的共享平台。安全、私密、高效、便捷的定制化出行是安安专机对服务品质的承诺。<br>贵宾专线：4000816616</p>
+        <!--庞巴迪-->
+        <div class="mui-card">
+            <div class="mui-btn mui-btn-block type-header">
+                <!--<div class="plane-img">
+						<img src="../anannews/plane5.PNG" />
+					</div>-->
+                <div class="plane-name">
+                    庞巴迪
+                </div>
+            </div>
+            <!--数据列表-->
+            <div class="type-list" id="pbdList">
+                <ul>
+                </ul>
+            </div>
+            <!--更多按钮-->
+            <div class="more" data-status="down">
+                <img src="../images/double_arrow_down.png" />
+            </div>
+        </div>
+        <!--湾流-->
+        <div class="mui-card">
+            <div class="mui-btn mui-btn-block type-header">
+                <!--<div class="plane-img">
+						<img src="../anannews/plane1.PNG" />
+					</div>-->
+                <div class="plane-name">
+                    湾流
+                </div>
+            </div>
+            <!--数据列表-->
+            <div class="type-list" id="wlList">
+                <ul>
+                </ul>
+            </div>
+            <!--更多按钮-->
+            <div class="more" data-status="down">
+                <img src="../images/double_arrow_down.png" />
+            </div>
+        </div>
+        <!--其它类型-->
+        <div class="mui-card">
+            <div class="mui-btn mui-btn-block type-header">
+                <!--<div class="plane-img">
+						<img src="../anannews/news0.5.jpg" />
+					</div>-->
+                <div class="plane-name">
+                    其它
+                </div>
+            </div>
+            <!--数据列表-->
+            <div class="type-list" id="otherList">
+                <ul>
+                </ul>
+            </div>
+            <!--更多按钮-->
+            <div class="more" data-status="down">
+                <img src="../images/double_arrow_down.png" />
+            </div>
+        </div>
+        <!--底部导航-->
+        <nav class="mui-bar mui-bar-tab">
+            <!--<img class="downLogo" src="images/ic_logo.png" />-->
+            <!--<span class="downIntro">*上述航班信息由安安专机独家提供</span>-->
+            <!--<button class="downApp" id="downApp">立即下载</button>-->
+        </nav>
+    </div>
+
+    <!--mui-->
+    <script src="../lib/mui/mui.js"></script>
+    <!--jquery-->
+    <script src="../lib/jquery/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <!--mobile-detect-->
+    <!--<script src="js/lib/mobile-detect/mobile-detect.js"></script>
+		<script src="js/lib/mobile-detect/device.js"></script>-->
+    <!--公有js-->
+    <script src="../public/public.js" type="text/javascript" charset="utf-8"></script>
+    <!--私有js-->
+    <script src="../js/MessageShowByPlane.js" type="text/javascript" charset="utf-8"></script>
+</body>
+
+</html>
