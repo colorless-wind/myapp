@@ -72,6 +72,7 @@ body {
     font-size: 15px;
     font-weight: bold;
     border-bottom: 1px solid #78a6c8;
+    padding: 8px 0;
 }
 
 .type-header .plane-img {
@@ -92,7 +93,6 @@ body {
 
 .type-list ul li {
     font-size: 14px;
-    font-family: '楷体';
     /*    font-weight: bold;*/
     line-height: 1.5;
     margin-bottom: 10px;
@@ -103,7 +103,7 @@ body {
     overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 6;
+    -webkit-line-clamp: 4;
     word-break: break-all;
 }
 
